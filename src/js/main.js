@@ -68,6 +68,21 @@ var draw = (function() {
       y2=y;
     },
 
+    //  set for triangle start
+    //Set the x2,y2
+      setStart: function() {
+          x2=x;
+          y2=y;
+        },
+    
+    //Set the x3,y3
+        setEnd: function() {
+          x3=x;
+          y3=y;
+        },
+    //  set for triangle end
+    
+
     //Sets the shape to be drawn
     setShape: function(shp) {
       shape = shp;
@@ -97,6 +112,8 @@ var draw = (function() {
         this.drawPath();
       } else if( shape==='circle' ) {
         this.drawCircle();
+      } else if( shape==='triangle' ) {
+        this.drawtriangle();
       } else {
         alert('Please choose a shape');
       }
@@ -130,6 +147,7 @@ var draw = (function() {
     },
 
 
+    // Draw a Path
     drawPath: function() {
       //console.log({x1:x,y1:y,x2:x2,y2:y2});
       //Start by using random fill colors.
@@ -147,9 +165,25 @@ var draw = (function() {
       ctx.fillRect (x1,y1,(x2-x1),(y2-y1));
     },
 
+    //Draw a Triangle
+    drawtriangle: function() {
+          //Start by using random fill colors.
+            ctx.fillStyle = '#'+Math.floor(Math.random()*16777215).toString(16);
+            ctx.beginPath();
+            ctx.moveTo(x1, y1);
+            ctx.lineTo(x2, y2);
+            ctx.lineTo(x3, y3);
+            ctx.lineTo(x1, y1);
+            // ctx.closePath();
+            ctx.stroke();
+    },
+    
+
     getCanvas: function(){
       return canvas;
     },
+
+
 
     //Initialize the object, this must be called before anything else
     init: function() {
@@ -206,3 +240,13 @@ document.getElementById('btnCircle').addEventListener('click', function(){
 document.getElementById('btnPath').addEventListener('click', function(){
     draw.setShape('path');
 }, false);
+
+//Draw a triangle
+document.getElementById('btnTriangle').addEventListener('click',function(){
+  draw.setShape('triangle');
+});
+
+//Draw a three point triangle
+document.getElementById('btn3Point').addEventListener('click', function(){
+  draw.setShape('3-point');
+});
